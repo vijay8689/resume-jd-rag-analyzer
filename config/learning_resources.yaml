@@ -1,0 +1,29 @@
+playwright:
+  - name: Playwright Official Documentation
+    url: https://playwright.dev/
+    type: official
+
+selenium:
+  - name: Selenium Official Documentation
+    url: https://www.selenium.dev/documentation/
+    type: official
+
+python:
+  - name: Python Documentation
+    url: https://docs.python.org/3/
+    type: official
+
+kubernetes:
+  - name: Kubernetes Documentation
+    url: https://kubernetes.io/docs/
+    type: official
+
+docker:
+  - name: Docker Docs
+    url: https://docs.docker.com/
+    type: official
+
+azure:
+  - name: Azure Documentation
+    url: https://learn.microsoft.com/azure/
+    type: official

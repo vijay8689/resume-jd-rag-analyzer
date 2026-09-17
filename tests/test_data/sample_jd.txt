@@ -1,0 +1,3 @@
+Senior QA Automation Engineer
+Required: 5+ years Selenium, 3+ years Playwright, Python, Kubernetes
+Preferred: AWS, Docker, LangChain

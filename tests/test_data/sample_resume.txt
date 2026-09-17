@@ -1,0 +1,14 @@
+Professional Summary
+QA Automation Engineer with 10 years of experience in Selenium, Playwright, Python, Java, and REST Assured.
+
+Technical Skills
+Python, Java, Selenium, Playwright, REST Assured, Jenkins, AWS, LangChain, LangGraph
+
+Professional Experience
+Senior QA Automation Engineer
+- 5 years of Playwright automation experience
+- 10 years Selenium automation using Java and Python
+- Built CI/CD pipelines with Jenkins and Docker
+
+Projects
+- Created LLM workflow automation with LangChain and LangGraph

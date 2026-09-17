@@ -1,0 +1,37 @@
+selenium:
+  canonical: Selenium
+  aliases:
+    - Selenium WebDriver
+    - WebDriver
+
+javascript:
+  canonical: JavaScript
+  aliases:
+    - JS
+    - ECMAScript
+
+typescript:
+  canonical: TypeScript
+  aliases:
+    - TS
+
+playwright:
+  canonical: Playwright
+  aliases:
+    - Playwright Test
+
+python:
+  canonical: Python
+  aliases:
+    - Python3
+
+pytest:
+  canonical: pytest
+  aliases:
+    - PyTest
+
+rest_assured:
+  canonical: REST Assured
+  aliases:
+    - Rest Assured
+    - REST-Assured

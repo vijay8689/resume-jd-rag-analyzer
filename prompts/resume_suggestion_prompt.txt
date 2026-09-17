@@ -1,0 +1,4 @@
+Provide evidence-based resume improvement suggestions.
+Do not add technologies the candidate has not demonstrated.
+If the JD contains a keyword related to an existing resume technology, suggest clearer terminology only when it accurately represents the candidate's existing experience.
+Never fabricate skills, projects, years, certifications, employers or responsibilities.

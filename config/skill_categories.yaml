@@ -1,0 +1,52 @@
+programming_languages:
+  - Java
+  - Python
+  - C#
+  - JavaScript
+  - TypeScript
+
+automation:
+  - Selenium
+  - Playwright
+  - Cypress
+  - Appium
+  - Tosca
+
+api_testing:
+  - REST Assured
+  - Postman
+  - SOAP UI
+  - GraphQL
+
+cloud:
+  - AWS
+  - Azure
+  - GCP
+
+devops:
+  - Jenkins
+  - GitHub Actions
+  - Azure DevOps
+  - Docker
+  - Kubernetes
+
+ai:
+  - LLM
+  - RAG
+  - LangChain
+  - LangGraph
+  - Prompt Engineering
+  - AI Testing
+  - Agentic AI
+
+databases:
+  - Oracle
+  - SQL Server
+  - PostgreSQL
+  - MongoDB
+
+test_management:
+  - Jira
+  - ALM
+  - Zephyr
+  - Xray

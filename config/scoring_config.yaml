@@ -1,0 +1,6 @@
+mandatory_weight: 3
+preferred_weight: 2
+optional_weight: 1
+match_weight: 1.0
+partial_weight: 0.5
+missing_weight: 0.0
