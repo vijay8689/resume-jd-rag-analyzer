@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from pathlib import Path
 
 import streamlit as st
 
@@ -10,6 +11,7 @@ from src.ui.page_header import render_footer, render_page_header
 
 
 st.set_page_config(page_title="Resume AI Match Analyzer", page_icon="📄", layout="wide")
+st.logo(str(Path(__file__).parent / "files" / "RAG_LOGO.png"), size="medium")
 
 
 def inject_css() -> None:
@@ -92,7 +94,7 @@ with st.sidebar:
 st.subheader("Job Description")
 jd_text = st.text_area("Paste the complete job description below.", height=220, placeholder="Paste job description here...")
 
-if st.button("Analyze Resume", disabled=not (st.session_state.get("resume_processed") and bool(jd_text.strip()))):
+if st.button("Analyze Resume", disabled=not bool(jd_text.strip())):
     if not st.session_state.get("resume_processed"):
         st.warning("Please upload a resume before starting analysis.")
     elif not jd_text.strip():

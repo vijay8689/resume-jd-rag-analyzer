@@ -4,6 +4,9 @@ port = 8501
 enableCORS = false
 maxUploadSize = 1
 
+[client]
+toolbarMode = "minimal"
+
 [theme]
 primaryColor = "#2563eb"
 backgroundColor = "#ffffff"
