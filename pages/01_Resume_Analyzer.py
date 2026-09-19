@@ -3,6 +3,22 @@ import streamlit as st
 from src.ui.page_header import render_footer, render_page_header
 
 st.set_page_config(page_title="Resume Analyzer", page_icon="📊", layout="wide")
+st.markdown(
+    """
+    <style>
+    .main { padding-top: 0; }
+    [data-testid="stHeader"] {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border-bottom: none;
+    }
+    [data-testid="stHeader"] .stAppHeader {
+        background: rgba(0, 0, 0, 0);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 render_page_header("Resume Analyzer", "Explore match signals, skill gaps, and evidence from the latest analysis.")
 
 result = st.session_state.get("analysis_result")

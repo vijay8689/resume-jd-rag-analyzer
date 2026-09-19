@@ -3,6 +3,22 @@ import streamlit as st
 from src.ui.page_header import render_footer, render_page_header
 
 st.set_page_config(page_title="Analysis History", page_icon="🕘", layout="wide")
+st.markdown(
+    """
+    <style>
+    .main { padding-top: 0; }
+    [data-testid="stHeader"] {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border-bottom: none;
+    }
+    [data-testid="stHeader"] .stAppHeader {
+        background: rgba(0, 0, 0, 0);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 render_page_header("Analysis History", "Review the match profile of every completed analysis in this session.")
 
 history = st.session_state.get("analysis_history", [])

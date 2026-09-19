@@ -4,6 +4,22 @@ from src.config.settings import settings
 from src.ui.page_header import render_footer, render_page_header
 
 st.set_page_config(page_title="Settings", page_icon="⚙️", layout="wide")
+st.markdown(
+    """
+    <style>
+    .main { padding-top: 0; }
+    [data-testid="stHeader"] {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border-bottom: none;
+    }
+    [data-testid="stHeader"] .stAppHeader {
+        background: rgba(0, 0, 0, 0);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 render_page_header("Settings", "Tune the matching thresholds and runtime behavior of the analyzer.")
 
 st.subheader("Model Runtime")
