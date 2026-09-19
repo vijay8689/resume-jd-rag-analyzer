@@ -18,7 +18,15 @@ def inject_css() -> None:
     st.markdown(
         """
         <style>
-        .main { padding-top: 1rem; }
+        .main { padding-top: 0; }
+        [data-testid="stHeader"] {
+            background: rgba(0, 0, 0, 0);
+            box-shadow: none;
+            border-bottom: none;
+        }
+        [data-testid="stHeader"] .stAppHeader {
+            background: rgba(0, 0, 0, 0);
+        }
         .stTabs [data-baseweb="tab-list"] { gap: 0.5rem; }
         .stTabs [data-baseweb="tab"] { height: 2.5rem; }
         .metric-container { background: #f0f2f6; border-radius: 0.75rem; padding: 0.8rem; }
