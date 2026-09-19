@@ -179,8 +179,22 @@ if analysis_result:
             st.write(entry)
 
     with tabs[6]:
-        for item in analysis_result.get("learning_resources", []):
-            st.write(item)
+        roadmap = analysis_result.get("learning_resources", {})
+        if isinstance(roadmap, dict):
+            for skill, resources in roadmap.items():
+                st.subheader(skill)
+                if not resources:
+                    st.info("No tutorial links found for this skill.")
+                    continue
+                for resource in resources if isinstance(resources, list) else [resources]:
+                    if isinstance(resource, dict) and resource.get("url"):
+                        st.markdown(f"- [{resource.get('title', resource['url'])}]({resource['url']})")
+                    else:
+                        st.write(resource)
+        elif roadmap:
+            st.write(roadmap)
+        else:
+            st.info("No learning resources are needed.")
 
     with tabs[7]:
         for item in analysis_result.get("resume_suggestions", []):

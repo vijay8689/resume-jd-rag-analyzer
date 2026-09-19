@@ -52,18 +52,18 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
             background: rgba(255, 255, 255, .96);
         }}
         [data-testid="stMainBlockContainer"] [data-testid="stDataFrame"] {{
-            border: 1px solid rgba(164, 211, 255, .28);
+            border: 2px solid rgba(164, 211, 255, .38);
             border-radius: 10px;
         }}
         [data-testid="stMainBlockContainer"] [data-testid="stAlert"] {{
-            border: 1px solid rgba(91, 190, 255, .32);
+            border: 2px solid rgba(91, 190, 255, .52);
             border-radius: 12px;
             color: #f7fbff;
             background: rgba(20, 55, 105, .76);
         }}
         [data-testid="stFileUploader"] > section,
         [data-testid="stTextArea"] > div {{
-            border: 1px solid rgba(91, 190, 255, .48);
+            border: 2px solid rgba(91, 190, 255, .72);
             border-radius: 12px;
             background: rgba(8, 31, 65, .78);
             box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
@@ -103,7 +103,7 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         }}
         [data-testid="stMainBlockContainer"] [data-testid="stMetric"] {{
             padding: .8rem;
-            border: 1px solid rgba(91, 190, 255, .26);
+            border: 2px solid rgba(91, 190, 255, .42);
             border-radius: 12px;
             background: rgba(14, 44, 87, .62);
         }}
@@ -125,7 +125,7 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
             border: 1px solid rgba(20, 36, 61, 0.18);
             border-radius: 14px;
             color: #f7fbff;
-            background: linear-gradient(135deg, rgba(16, 36, 61, .95) 0%, rgba(28, 77, 104, .92) 48%, rgba(44, 139, 134, .88) 100%);
+            background: rgba(5, 18, 39, .82);
             box-shadow: 0 16px 34px rgba(17, 39, 59, 0.22), inset 0 1px 0 rgba(255,255,255,.2);
             transform: perspective(900px) rotateX(1deg);
         }}
@@ -160,18 +160,26 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         }}
         .rai-3d-header__eyebrow {{
             margin: 0 0 .45rem;
-            color: #a9f0dc;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .14em;
+            color: transparent;
+            background: linear-gradient(90deg, #7ef9d3 0%, #9ad7ff 35%, #ffd86b 66%, #ff9ec3 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 16px rgba(126, 249, 211, .25);
         }}
         .rai-3d-header h1 {{
             margin: 0;
-            color: #f8fcff !important;
+            color: transparent !important;
+            background: linear-gradient(90deg, #7ef9d3 0%, #9ad7ff 22%, #d6f7ff 42%, #ffd86b 63%, #ff9ec3 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
             font-size: clamp(1.65rem, 3vw, 2.45rem);
             line-height: 1.05;
-            letter-spacing: 0;
-            text-shadow: 0 2px 0 rgba(4, 20, 35, .42), 0 8px 18px rgba(4, 20, 35, .36);
+            letter-spacing: .02em;
+            font-weight: 900;
+            text-shadow: 0 0 24px rgba(126, 249, 211, .14), 0 8px 18px rgba(4, 20, 35, .36);
         }}
         .rai-3d-header p {{
             margin: .65rem 0 0;
