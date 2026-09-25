@@ -1,12 +1,36 @@
 from __future__ import annotations
 
 import html
-import json
-import re
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib import parse, request
 
 import yaml
+
+
+class _DuckDuckGoResultsParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.results: list[dict[str, str]] = []
+        self._current: dict[str, str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "a":
+            return
+        attributes = dict(attrs)
+        classes = (attributes.get("class") or "").split()
+        if {"result__a", "result-link"}.intersection(classes):
+            self._current = {"url": attributes.get("href") or "", "title": ""}
+
+    def handle_data(self, data: str) -> None:
+        if self._current is not None:
+            self._current["title"] += data
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "a" and self._current is not None:
+            self._current["title"] = " ".join(self._current["title"].split())
+            self.results.append(self._current)
+            self._current = None
 
 
 class ResourceManager:
@@ -54,61 +78,44 @@ class ResourceManager:
 
     def _search_duckduckgo_tutorials(self, skill: str) -> list[dict]:
         """Search DuckDuckGo for tutorial links related to a skill."""
-        q_variants = [f"{skill} tutorial", f"{skill} course", f"{skill} for beginners"]
+        query = parse.quote(f"{skill} tutorial")
         seen: set[str] = set()
         results: list[dict] = []
 
-        for query in q_variants:
-            encoded = parse.quote(query)
-            for endpoint in (
-                f"https://duckduckgo.com/html/?q={encoded}",
-                f"https://lite.duckduckgo.com/lite/?q={encoded}",
-                f"https://api.duckduckgo.com/?q={encoded}&format=json&no_redirect=1&skip_disambig=1",
-            ):
-                try:
-                    req = request.Request(endpoint, headers={"User-Agent": "Mozilla/5.0"})
-                    with request.urlopen(req, timeout=12) as response:
-                        body = response.read().decode("utf-8", "ignore")
-                except Exception:
-                    continue
+        for endpoint in (
+            f"https://html.duckduckgo.com/html/?q={query}",
+            f"https://lite.duckduckgo.com/lite/?q={query}",
+        ):
+            try:
+                req = request.Request(endpoint, headers={"User-Agent": "Mozilla/5.0"})
+                with request.urlopen(req, timeout=5) as response:
+                    body = response.read().decode("utf-8", "ignore")
+            except Exception:
+                continue
 
-                if endpoint.startswith("https://api.duckduckgo.com"):
-                    try:
-                        payload = json.loads(body)
-                    except json.JSONDecodeError:
-                        continue
-                    for item in payload.get("RelatedTopics", []) or []:
-                        if isinstance(item, dict):
-                            nested_items = item.get("Topics", [item]) if isinstance(item.get("Topics"), list) else [item]
-                            for nested in nested_items:
-                                if not isinstance(nested, dict):
-                                    continue
-                                url_value = nested.get("FirstURL") or nested.get("URL")
-                                if not url_value or not url_value.startswith("http") or url_value in seen:
-                                    continue
-                                title = nested.get("Text") or nested.get("Title") or skill
-                                seen.add(url_value)
-                                results.append({"title": title, "url": url_value, "type": "tutorial"})
-                    if payload.get("AbstractURL") and payload.get("AbstractURL") not in seen:
-                        seen.add(payload["AbstractURL"])
-                        results.append({"title": payload.get("Heading") or f"{skill} tutorial", "url": payload["AbstractURL"], "type": "tutorial"})
-                    if results:
-                        break
+            parser = _DuckDuckGoResultsParser()
+            parser.feed(body)
+            for item in parser.results:
+                destination = html.unescape(item["url"])
+                parsed_url = parse.urlparse(parse.urljoin(endpoint, destination))
+                if parsed_url.netloc.lower().endswith("duckduckgo.com"):
+                    redirect_url = parse.parse_qs(parsed_url.query).get("uddg", [""])[0]
+                    parsed_url = parse.urlparse(redirect_url)
+                if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
                     continue
-
-                pattern = re.compile(r'href=\"(https?://[^\"]+)\"', re.IGNORECASE)
-                matches = pattern.findall(body)
-                for url_value in matches:
-                    cleaned = html.unescape(url_value)
-                    if "duckduckgo.com" in cleaned or cleaned in seen or not cleaned.startswith("http"):
-                        continue
-                    title = skill.title()
-                    if title not in [r.get("title") for r in results]:
-                        seen.add(cleaned)
-                        results.append({"title": f"{title} tutorial", "url": cleaned, "type": "tutorial"})
-                if results:
+                url_value = parsed_url.geturl()
+                if url_value in seen:
+                    continue
+                seen.add(url_value)
+                results.append(
+                    {
+                        "title": item["title"] or f"{skill.title()} tutorial",
+                        "url": url_value,
+                        "type": "tutorial",
+                    }
+                )
+                if len(results) == 5:
                     break
-
             if results:
                 break
 

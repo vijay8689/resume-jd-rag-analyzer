@@ -23,7 +23,8 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         <style>
         .stApp {{
             background:
-                linear-gradient(rgba(3, 12, 27, .74), rgba(5, 18, 39, .82)),
+                linear-gradient(115deg, rgba(3, 12, 27, .74), rgba(5, 18, 39, .82)),
+                repeating-linear-gradient(135deg, rgba(126, 249, 211, .025) 0 1px, transparent 1px 18px),
                 url('{background_image}') center top / cover fixed no-repeat;
         }}
         [data-testid="stSidebar"] {{
@@ -98,8 +99,49 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         }}
         [data-testid="stMainBlockContainer"] button:hover,
         [data-testid="stSidebar"] button:hover {{
-            border-color: #8deaff;
-            background: linear-gradient(135deg, #2389c7, #356de0);
+            border-color: #9af4d8;
+            background: linear-gradient(135deg, #168f91, #2774c8);
+            transform: translateY(-1px);
+            box-shadow: 0 7px 18px rgba(21, 173, 166, .24);
+        }}
+        [data-testid="stMainBlockContainer"] button,
+        [data-testid="stSidebar"] button {{
+            transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+        }}
+        .stTabs [data-baseweb="tab-list"] {{
+            gap: .35rem;
+            border-bottom: 1px solid rgba(126, 249, 211, .24);
+        }}
+        .stTabs [data-baseweb="tab"] {{
+            height: 2.8rem;
+            color: #c5d6e8;
+            border-radius: 8px 8px 0 0;
+            transition: color .18s ease, background .18s ease;
+        }}
+        .stTabs [data-baseweb="tab"]:hover {{
+            color: #a9f0dc;
+            background: rgba(30, 126, 145, .22);
+        }}
+        .stTabs [aria-selected="true"] {{
+            color: #a9f0dc !important;
+            background: rgba(30, 126, 145, .2);
+        }}
+        [data-testid="stProgressBar"] > div > div > div > div {{
+            background: linear-gradient(90deg, #25b7a5, #5bcaff);
+        }}
+        [data-testid="stExpander"] {{
+            border: 1px solid rgba(91, 190, 255, .3);
+            border-radius: 10px;
+            background: rgba(8, 31, 65, .46);
+        }}
+        [data-testid="stMainBlockContainer"] [data-testid="stAlert"] a {{
+            color: #9af4d8;
+        }}
+        @media (prefers-reduced-motion: reduce) {{
+            *, *::before, *::after {{
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }}
         }}
         [data-testid="stMainBlockContainer"] [data-testid="stMetric"] {{
             padding: .8rem;
@@ -118,15 +160,15 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         .rai-3d-header {{
             position: relative;
             isolation: isolate;
-            overflow: hidden;
+            overflow: visible;
             min-height: 145px;
             margin: 0 0 1.25rem;
             padding: 1.5rem 1.75rem;
-            border: 1px solid rgba(20, 36, 61, 0.18);
+            border: 2px solid rgba(120, 190, 255, 0.7);
             border-radius: 14px;
             color: #f7fbff;
-            background: rgba(5, 18, 39, .82);
-            box-shadow: 0 16px 34px rgba(17, 39, 59, 0.22), inset 0 1px 0 rgba(255,255,255,.2);
+            background: transparent;
+            box-shadow: none;
             transform: perspective(900px) rotateX(1deg);
         }}
         .rai-3d-header::before,
@@ -134,24 +176,26 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
             content: "";
             position: absolute;
             z-index: -1;
-            border: 1px solid rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.12);
             transform: rotate(-18deg) skewX(-18deg);
             pointer-events: none;
+            opacity: .15;
         }}
         .rai-3d-header::before {{
-            width: 260px;
-            height: 190px;
-            right: 7%;
-            top: -74px;
-            background: linear-gradient(135deg, rgba(132, 235, 211, .28), rgba(25, 63, 88, .05));
-            box-shadow: 18px 22px 0 rgba(255,255,255,.06), 36px 44px 0 rgba(255,255,255,.04);
+            width: 240px;
+            height: 180px;
+            right: 8%;
+            top: -72px;
+            background: linear-gradient(135deg, rgba(126, 249, 211, .14), rgba(64, 191, 255, .04), transparent 75%);
+            box-shadow: 18px 22px 0 rgba(255,255,255,.02), 36px 44px 0 rgba(255,255,255,.01);
         }}
         .rai-3d-header::after {{
-            width: 130px;
-            height: 130px;
-            right: 30%;
-            bottom: -92px;
-            background: rgba(246, 190, 72, .2);
+            width: 110px;
+            height: 110px;
+            right: 28%;
+            bottom: -78px;
+            background: rgba(255, 216, 107, .08);
+            box-shadow: 0 0 16px rgba(255, 216, 107, .08);
         }}
         .rai-3d-header__content {{
             position: relative;
@@ -160,31 +204,25 @@ def render_page_header(title: str, subtitle: str, eyebrow: str = "") -> None:
         }}
         .rai-3d-header__eyebrow {{
             margin: 0 0 .45rem;
+            color: #a9f0dc;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .14em;
-            color: transparent;
-            background: linear-gradient(90deg, #7ef9d3 0%, #9ad7ff 35%, #ffd86b 66%, #ff9ec3 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: 0 0 16px rgba(126, 249, 211, .25);
         }}
         .rai-3d-header h1 {{
             margin: 0;
-            color: transparent !important;
-            background: linear-gradient(90deg, #7ef9d3 0%, #9ad7ff 22%, #d6f7ff 42%, #ffd86b 63%, #ff9ec3 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: #f8fcff !important;
             font-size: clamp(1.65rem, 3vw, 2.45rem);
             line-height: 1.05;
-            letter-spacing: .02em;
-            font-weight: 900;
-            text-shadow: 0 0 24px rgba(126, 249, 211, .14), 0 8px 18px rgba(4, 20, 35, .36);
+            letter-spacing: 0;
+            text-shadow: 0 2px 0 rgba(4, 20, 35, .42), 0 8px 18px rgba(4, 20, 35, .36);
         }}
         .rai-3d-header p {{
-            margin: .65rem 0 0;
+            margin: .75rem 0 0;
             color: #dcecff !important;
-            font-size: .95rem;
+            font-size: .98rem;
+            max-width: 70%;
+            text-shadow: 0 2px 10px rgba(5, 18, 39, .4);
         }}
         @media (max-width: 640px) {{
             .rai-3d-header {{ padding: 1.2rem; min-height: 130px; }}
@@ -213,8 +251,8 @@ def render_footer() -> None:
         .rai-footer {
             margin-top: 3rem;
             padding: 1rem 0 .5rem;
-            border-top: 1px solid rgba(20, 36, 61, .14);
-            color: #64748b;
+            border-top: 1px solid rgba(126, 249, 211, .24);
+            color: #c5d6e8;
             font-size: .8rem;
             text-align: center;
         }

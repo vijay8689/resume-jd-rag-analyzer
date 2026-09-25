@@ -95,7 +95,8 @@ with tabs[4]:
 			st.subheader(skill)
 			for resource in resources if isinstance(resources, list) else [resources]:
 				if isinstance(resource, dict) and resource.get("url"):
-					st.markdown(f"- [{resource.get('title', resource['url'])}]({resource['url']})")
+					title = resource.get("title") or resource.get("name") or resource["url"]
+					st.markdown(f"- [{title}]({resource['url']})")
 				else:
 					st.write(resource)
 	elif roadmap:
