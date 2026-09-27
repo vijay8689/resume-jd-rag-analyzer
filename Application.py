@@ -7,7 +7,6 @@ import plotly.graph_objects as go
 from src.config.settings import settings
 from src.services.resume_service import ResumeService
 from src.services.analysis_service import AnalysisService
-from src.services.interview_service import generate_interview_questions
 from src.ui.page_header import render_footer, render_page_header, render_workflow
 
 
@@ -138,7 +137,6 @@ if analysis_result:
         "Learning Roadmap",
         "Resume Suggestions",
         "Evidence",
-        "Interview Preparation",
     ])
 
     with tabs[0]:
@@ -241,65 +239,6 @@ if analysis_result:
         for evidence in analysis_result.get("evidence", []):
             st.write(evidence)
 
-    with tabs[9]:
-        st.subheader("Interview Preparation")
-        skill_statuses = {}
-        for result_key, status in (
-            ("matched_skills", "Matched"),
-            ("partial_skills", "Partial"),
-            ("missing_skills", "Unmatched"),
-        ):
-            for item in analysis_result.get(result_key, []):
-                skill = item.get("skill")
-                if skill:
-                    skill_statuses.setdefault(skill, status)
-
-        skills = list(skill_statuses)
-        selected_skills = st.multiselect(
-            "Select preferred skills",
-            options=skills,
-            format_func=lambda skill: f"{skill} · {skill_statuses[skill]}",
-            key="interview_selected_skills",
-            help="Choose matched, partially matched, or unmatched skills for your interview practice set.",
-        )
-        generate_clicked = st.button(
-            "Generate 10 Questions",
-            key="generate_interview_questions",
-            disabled=not selected_skills or not settings.llm_enabled,
-        )
-
-        if not settings.llm_enabled:
-            st.info("Enable the language model in your app configuration to generate interview questions.")
-        elif not skills:
-            st.info("No extracted skills are available for interview preparation.")
-        elif not selected_skills:
-            st.info("Select one or more skills to build your interview practice set.")
-
-        if generate_clicked:
-            with st.spinner("Preparing interview questions and sample answers..."):
-                try:
-                    questions = generate_interview_questions(
-                        selected_skills=selected_skills,
-                        skill_statuses=skill_statuses,
-                        job_title=analysis_result.get("job_title", ""),
-                    )
-                    st.session_state.interview_questions = {
-                        "skills": list(selected_skills),
-                        "items": questions,
-                    }
-                except Exception as exc:
-                    st.session_state.interview_questions = None
-                    st.error(f"Unable to generate interview preparation: {exc}")
-
-        generated = st.session_state.get("interview_questions")
-        if generated and generated.get("skills") == list(selected_skills):
-            st.caption("Generated for: " + ", ".join(generated["skills"]))
-            for index, item in enumerate(generated["items"], start=1):
-                with st.expander(f"{index}. {item['question']}", expanded=index == 1):
-                    st.caption(f"Skill focus: {item['skill']}")
-                    st.markdown(f"**Sample answer**\n\n{item['answer']}")
-        elif generated and selected_skills:
-            st.info("Your selection changed. Generate again to update the questions and answers.")
 
 else:
     st.info("Start with your resume in the sidebar, then add a job description. Your analysis will highlight matching skills, opportunities to improve, and practical next steps.")

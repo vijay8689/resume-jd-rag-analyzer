@@ -2,12 +2,39 @@ from __future__ import annotations
 
 import json
 import os
+from pathlib import Path
 from typing import Any
 
 import streamlit as st
 from openai import OpenAI
+from dotenv import dotenv_values
+from streamlit.errors import StreamlitSecretNotFoundError
 
 from src.config.settings import settings
+
+
+class MissingAPIKeyError(ValueError):
+    """The optional language model has not been configured."""
+
+
+def resolve_api_key(api_key: str | None = None) -> str:
+    """Read credentials without requiring a Streamlit secrets file."""
+    value = api_key or os.getenv("XKIRO_API_KEY")
+    if not value:
+        env_path = Path(__file__).resolve().parents[2] / ".env"
+        value = dotenv_values(env_path).get("XKIRO_API_KEY")
+    if not value:
+        try:
+            value = st.secrets.get("XKIRO_API_KEY", "")
+        except StreamlitSecretNotFoundError:
+            value = ""
+    value = (value or "").strip()
+    if not value or value == "replace-with-your-xkiro-api-key":
+        raise MissingAPIKeyError(
+            "Interview preparation requires an XKIRO API key. Set XKIRO_API_KEY "
+            "in the project's .env file, your environment, or .streamlit/secrets.toml."
+        )
+    return value
 
 
 class LLMProvider:
@@ -17,8 +44,8 @@ class LLMProvider:
 
 class XKiroQwenProvider(LLMProvider):
     def __init__(self, api_key: str | None = None) -> None:
-        self.api_key = api_key or os.getenv("XKIRO_API_KEY") or st.secrets.get("XKIRO_API_KEY", "") if hasattr(st, "secrets") else os.getenv("XKIRO_API_KEY")
-        self.client = OpenAI(base_url=settings.openai_api_base, api_key=self.api_key or "")
+        self.api_key = resolve_api_key(api_key)
+        self.client = OpenAI(base_url=settings.openai_api_base, api_key=self.api_key)
 
     def generate(self, prompt: str) -> str:
         if not self.api_key:

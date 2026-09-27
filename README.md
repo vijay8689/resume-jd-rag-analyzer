@@ -117,3 +117,17 @@ docker compose up --build
 - Hosted vector store and persistence layer
 - Better JD extraction heuristics
 - User analytics and history export
+
+## Find Jobs
+
+Use **Find Jobs** in the sidebar to search up to five comma-separated job roles
+and a location. LinkedIn public listings are retrieved when available. Each
+listing opens on its source site so you can review it and submit an application.
+
+Naukri search links work without configuration. To show indexed Naukri listings
+inside the app, add `SERPAPI_API_KEY` to `.env`, your environment, or Streamlit
+secrets. This also enables a search fallback when LinkedIn public results are
+unavailable. See [SerpApi documentation](https://serpapi.com/organic-results).
+Provider usage may incur charges. Indexed listings can be stale; availability
+must be confirmed on the job site. Site blocks or provider failures are shown
+with a direct search link instead of invented job results.
