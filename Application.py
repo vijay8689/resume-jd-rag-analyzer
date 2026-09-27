@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-from pathlib import Path
 
 import streamlit as st
 import plotly.graph_objects as go
@@ -9,39 +8,15 @@ from src.config.settings import settings
 from src.services.resume_service import ResumeService
 from src.services.analysis_service import AnalysisService
 from src.services.interview_service import generate_interview_questions
-from src.ui.page_header import render_footer, render_page_header
+from src.ui.page_header import render_footer, render_page_header, render_workflow
 
 
 st.set_page_config(page_title="Resume AI Match Analyzer", page_icon="📄", layout="wide")
-st.logo(str(Path(__file__).parent / "files" / "RAG_LOGO.png"), size="medium")
 
 
-def inject_css() -> None:
-    st.markdown(
-        """
-        <style>
-        .main { padding-top: 0; }
-        [data-testid="stHeader"] {
-            background: rgba(0, 0, 0, 0);
-            box-shadow: none;
-            border-bottom: none;
-        }
-        [data-testid="stHeader"] .stAppHeader {
-            background: rgba(0, 0, 0, 0);
-        }
-        .stTabs [data-baseweb="tab-list"] { gap: 0.5rem; }
-        .stTabs [data-baseweb="tab"] { height: 2.5rem; }
-        .metric-container { background: #f0f2f6; border-radius: 0.75rem; padding: 0.8rem; }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
-inject_css()
-
-
-render_page_header("Resume AI Match Analyzer", "RAG-powered resume and job description skill gap analysis.")
+render_page_header("Resume AI Match Analyzer", "Understand your fit. Identify skill gaps. Plan your next career move.")
 
 if "session_id" not in st.session_state:
     st.session_state.session_id = "session_" + os.urandom(4).hex()
@@ -67,7 +42,7 @@ with st.sidebar:
         help="PDF, DOCX, or TXT. Maximum file size: 500 KB.",
     )
     if uploaded is not None:
-        if st.button("Process Resume"):
+        if st.button("Process Resume", type="primary", use_container_width=True):
             status = st.status("Processing resume...", expanded=True)
             try:
                 status.write("Extracting resume text and preparing searchable chunks...")
@@ -105,10 +80,13 @@ with st.sidebar:
     st.write(f"Similarity Threshold: {settings.match_threshold}")
     st.write(f"Top K: {settings.top_k}")
 
-st.subheader("Job Description")
-jd_text = st.text_area("Paste the complete job description below.", height=220, placeholder="Paste job description here...")
+render_workflow(st.session_state.get("resume_processed", False), bool(st.session_state.get("analysis_result")))
 
-if st.button("Analyze Resume", disabled=not bool(jd_text.strip())):
+with st.container(border=True, key="job_description_panel"):
+    st.subheader("Job Description")
+    jd_text = st.text_area("Paste the complete job description below.", height=220, placeholder="Paste job description here...")
+
+if st.button("Analyze Resume", type="primary", disabled=not bool(jd_text.strip())):
     if not st.session_state.get("resume_processed"):
         st.warning("Please upload a resume before starting analysis.")
     elif not jd_text.strip():
@@ -180,9 +158,10 @@ if analysis_result:
                         values=status_counts,
                         hole=0.7,
                         sort=False,
-                        marker={"colors": ["#43d6b5", "#ffc857", "#ff7b72"]},
+                        marker={"colors": ["#28776a", "#c99738", "#bb6861"]},
                         textinfo="label+value",
-                        textfont={"color": "#f7fbff", "size": 12},
+                        textposition="outside", automargin=True,
+                        textfont={"color": "#20333f", "size": 12},
                         hovertemplate="%{label}: %{value} skills<extra></extra>",
                     )
                 )
@@ -198,7 +177,7 @@ if analysis_result:
                             "x": 0.5,
                             "y": 0.5,
                             "showarrow": False,
-                            "font": {"color": "#f7fbff", "size": 25},
+                            "font": {"color": "#20333f", "size": 25},
                         }
                     ],
                 )
@@ -323,6 +302,6 @@ if analysis_result:
             st.info("Your selection changed. Generate again to update the questions and answers.")
 
 else:
-    st.info("Upload your resume to get started. Your resume will be processed, chunked, embedded and indexed into ChromaDB.")
+    st.info("Start with your resume in the sidebar, then add a job description. Your analysis will highlight matching skills, opportunities to improve, and practical next steps.")
 
 render_footer()

@@ -5,12 +5,21 @@ from pathlib import Path
 import chromadb
 import streamlit as st
 from chromadb.api.types import Metadata, Where
+from chromadb.utils.embedding_functions.onnx_mini_lm_l6_v2 import ONNXMiniLM_L6_V2
 
 from src.config.settings import settings
 
 
 class ChromaManager:
     def __init__(self) -> None:
+        # Chroma's default embedder hardcodes a home-directory cache. Keep the
+        # same model and collection configuration, but use app-owned storage.
+        cache_directory = Path(settings.chroma_model_cache_directory).expanduser()
+        if not cache_directory.is_absolute():
+            cache_directory = Path(__file__).resolve().parents[2] / cache_directory
+        cache_directory = cache_directory.resolve() / ONNXMiniLM_L6_V2.MODEL_NAME
+        cache_directory.mkdir(parents=True, exist_ok=True)
+        ONNXMiniLM_L6_V2.DOWNLOAD_PATH = cache_directory
         self.persist_directory = Path(settings.chroma_persist_directory)
         self.persist_directory.mkdir(parents=True, exist_ok=True)
         self.client = chromadb.PersistentClient(path=str(self.persist_directory))

@@ -4,6 +4,7 @@ __pycache__/
 .env
 .streamlit/secrets.toml
 data/chroma/
+data/model_cache/
 uploads/
 *.log
 .pytest_cache/

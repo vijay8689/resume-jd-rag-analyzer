@@ -9,6 +9,7 @@ class Settings:
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
     chroma_persist_directory: str = os.getenv("CHROMA_PERSIST_DIRECTORY", "./data/chroma")
     chroma_collection_name: str = os.getenv("CHROMA_COLLECTION_NAME", "resume_documents")
+    chroma_model_cache_directory: str = os.getenv("CHROMA_MODEL_CACHE_DIRECTORY", "./data/model_cache/chroma")
     chunk_size: int = int(os.getenv("CHUNK_SIZE", "700"))
     chunk_overlap: int = int(os.getenv("CHUNK_OVERLAP", "100"))
     top_k: int = int(os.getenv("TOP_K", "5"))

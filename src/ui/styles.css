@@ -1,0 +1,75 @@
+/* Shared light workspace. Widget colors come from the native Streamlit theme. */
+.stApp { background: #f3f5fc; }
+[data-testid="stHeader"] { background: #f3f5fc; }
+[data-testid="stMainBlockContainer"] { max-width: 1440px; padding: 2.5rem 2.5rem 1.5rem; }
+[data-testid="stSidebar"] { background: #eaf0ff; border-right: 1px solid #dce3df; }
+[data-testid="stSidebar"] h3 { font-size: 1rem; }
+[data-testid="stSidebarHeader"] { position: sticky; top: 0; z-index: 10; background: #eaf0ff; }
+[data-testid="stSidebarNav"] a[aria-current="page"] { background: #dce9fc; border-left: 3px solid #4d7ec6; border-radius: 7px; }
+h1, h2, h3 { color: #20333f; letter-spacing: -.025em; }
+h3 { font-size: 1.15rem; }
+[data-testid="stCaptionContainer"] { color: #586c73; }
+.rai-header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 2rem 2.25rem; margin-bottom: 1.25rem; position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(115deg, #243e9a 0%, #5941af 60%, #873984 100%); border: 0; border-radius: 20px; box-shadow: 0 12px 30px #4338a322; min-height: 190px; }
+.rai-header--teal { background: linear-gradient(115deg, #075d70, #137564 65%, #326191); }
+.rai-header--violet { background: linear-gradient(115deg, #563098, #803d99 60%, #9b3b6c); }
+.rai-header--blue { background: linear-gradient(115deg, #204997, #176b92 65%, #136d73); }
+.rai-header::before, .rai-header::after { content: ""; position: absolute; z-index: -1; pointer-events: none; border: 28px solid #ffffff12; border-radius: 50%; width: 240px; height: 240px; right: -80px; top: -125px; }
+.rai-header::after { width: 160px; height: 160px; right: 130px; top: 80px; border-width: 18px; }
+.rai-header__content { max-width: 760px; }
+.rai-eyebrow { display: inline-block; padding: .35rem .65rem; border: 1px solid #ffffff40; border-radius: 6px; background: #ffffff14; color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .16em; margin-bottom: .65rem; }
+.rai-header h1 { color: #fff; margin: 0; padding: 0; font-size: clamp(1.65rem, 2.8vw, 2.5rem); line-height: 1.2; font-weight: 650; }
+.rai-header p { color: #f0f1ff; margin: .8rem 0 0; font-size: 1rem; line-height: 1.6; }
+.rai-graphic { display: flex; align-items: center; flex-shrink: 0; padding: 1rem; }
+.rai-graphic__document { width: 65px; height: 84px; border: 1px solid #b7d8ff; border-radius: 9px; padding: 18px 12px; background: #eef4ff; transform: rotate(-8deg); box-shadow: 8px 10px 0 #ffffff14; }
+.rai-graphic__document span { display: block; height: 4px; margin-bottom: 9px; background: #687dcc; border-radius: 3px; }
+.rai-graphic__document span:nth-child(2) { width: 65%; }
+.rai-graphic__document span:last-child { width: 80%; }
+.rai-graphic__connection { width: 35px; border-top: 2px dashed #d5dcff; }
+.rai-graphic__target { width: 78px; height: 78px; border: 10px solid #c6d8ff; background: #ffffff15; border-radius: 50%; display: grid; place-items: center; }
+.rai-graphic__target div { width: 34px; height: 34px; border: 8px solid #f9d27c; border-radius: 50%; }
+.rai-workflow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.8rem; }
+.rai-step { display: flex; align-items: center; gap: .85rem; border: 1px solid #dce3df; border-radius: 12px; padding: 1rem; background: #fff; }
+.rai-step__number { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; background: #eef1f2; color: #586c73; border-radius: 10px; font-size: .78rem; font-weight: 700; }
+.rai-step:nth-child(1) { background: linear-gradient(120deg, #dceaff, #edf4ff); border-color: #bbd2f6; border-top: 4px solid #447bdd; }
+.rai-step:nth-child(2) { background: linear-gradient(120deg, #e8dcff, #f5edff); border-color: #d2b9f4; border-top: 4px solid #8c4dcc; }
+.rai-step:nth-child(3) { background: linear-gradient(120deg, #cef1e5, #eafaf4); border-color: #a9ddcd; border-top: 4px solid #169578; }
+.rai-step:nth-child(1) .rai-step__number { background: #dce9fc; color: #315d9d; }
+.rai-step:nth-child(2) .rai-step__number { background: #e6dcf7; color: #684599; }
+.rai-step:nth-child(3) .rai-step__number { background: #d3eee3; color: #236658; }
+.rai-step.is-ready .rai-step__number { box-shadow: inset 0 0 0 2px #28776a; }
+.rai-step strong { color: #20333f; font-size: .88rem; font-weight: 600; }
+.rai-step p { color: #586c73; font-size: .76rem; margin: .2rem 0 0; line-height: 1.5; }
+[data-testid="stTextArea"] textarea { background: #fff; line-height: 1.65; }
+.st-key-job_description_panel { background: linear-gradient(120deg, #f1ebff, #f5f8ff); border-top: 3px solid #8a69c0 !important; box-shadow: 0 5px 18px #28396605; }
+[data-testid="stFileUploaderDropzone"] { background: #f2edff; border: 1px dashed #91aaa1; border-radius: 10px; }
+[data-testid="stMetric"] { background: #fff; border: 1px solid #dce3df; border-radius: 12px; padding: 1.1rem 1.25rem; }
+[data-testid="stMetricLabel"] { color: #586c73; }
+[data-testid="stMetricValue"] { color: #20333f; font-weight: 600; }
+[data-testid="stColumn"]:nth-child(4n + 1) [data-testid="stMetric"] { background: linear-gradient(120deg, #dceaff, #edf4ff); border-color: #bbd2f6; border-top: 4px solid #447bdd; }
+[data-testid="stColumn"]:nth-child(4n + 2) [data-testid="stMetric"] { background: linear-gradient(120deg, #cef1e5, #eafaf4); border-color: #a9ddcd; border-top: 4px solid #169578; }
+[data-testid="stColumn"]:nth-child(4n + 3) [data-testid="stMetric"] { background: linear-gradient(120deg, #ffe9b8, #fff7e6); border-color: #efd194; border-top: 4px solid #cf931b; }
+[data-testid="stColumn"]:nth-child(4n + 4) [data-testid="stMetric"] { background: linear-gradient(120deg, #ffdce5, #fff0f4); border-color: #efbccb; border-top: 4px solid #d05b81; }
+[data-testid="stDataFrame"], [data-testid="stExpander"] { border-radius: 10px; overflow: hidden; border: 1px solid #dce3df; }
+[data-testid="stExpander"] { background: #fff; }
+.stTabs [data-baseweb="tab-list"] { gap: 1.2rem; border-bottom: 1px solid #dce3df; }
+.stTabs [data-baseweb="tab"] { height: 3rem; }
+.stTabs [aria-selected="true"] { color: #473194; background: #e7defa; border-radius: 8px 8px 0 0; }
+[data-testid="stButton"] button { border-radius: 8px; min-height: 2.65rem; font-weight: 600; }
+[data-testid="stButton"] button:focus-visible { outline: 3px solid #86b9ab; outline-offset: 3px; }
+[data-testid="stPlotlyChart"] { background: #fff; border: 1px solid #dce3df; border-radius: 12px; padding: .5rem; }
+.rai-footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.25rem; border-top: 3px solid #c3b9ed; color: #586c73; font-size: .75rem; }
+/* Keep native sidebar controls visible without hovering, in both states. */
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="stExpandSidebarButton"] { opacity: 1 !important; visibility: visible !important; }
+[data-testid="stSidebarCollapseButton"] button,
+[data-testid="stSidebarCollapsedControl"] button,
+button[data-testid="stExpandSidebarButton"] { background: #e4ebfb; color: #334f94; border: 1px solid #bdcdec; border-radius: 9px; min-width: 36px; min-height: 36px; opacity: 1 !important; visibility: visible !important; }
+[data-testid="stSidebarCollapseButton"] button:hover,
+[data-testid="stSidebarCollapsedControl"] button:hover,
+button[data-testid="stExpandSidebarButton"]:hover { background: #d1def7; color: #233b76; }
+[data-testid="stSidebarCollapseButton"] button:focus-visible,
+[data-testid="stSidebarCollapsedControl"] button:focus-visible,
+button[data-testid="stExpandSidebarButton"]:focus-visible { outline: 3px solid #6474cf; outline-offset: 2px; }
+@media (max-width: 900px) { .rai-graphic { display: none; } .rai-workflow { gap: .6rem; } .rai-step { align-items: flex-start; } }
+@media (max-width: 640px) { [data-testid="stMainBlockContainer"] { padding: 1.5rem 1rem; } .rai-header { padding: 1.4rem; } .rai-workflow { grid-template-columns: 1fr; } .rai-footer { flex-direction: column; } }
